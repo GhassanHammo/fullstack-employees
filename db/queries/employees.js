@@ -1,6 +1,18 @@
 /** @returns the employee created according to the provided details */
-export async function createEmployee({ name, birthday, salary }) {
+import db from "#db/client";
+
+
+export async function createEmployee({ employees_name, birthday, salary }) {
   // TODO
+  const SQL = `
+  INSERT INTO dogs (dogs_name, breed)
+        VALUES($1, $2 , $3) RETURNING *
+ 
+  `;
+const {
+    rows: [dogs],
+  } = await db.query(SQL, [employees_name, birthday, salary ]);
+  return dogs;
 }
 
 // === Part 2 ===
@@ -8,6 +20,12 @@ export async function createEmployee({ name, birthday, salary }) {
 /** @returns all employees */
 export async function getEmployees() {
   // TODO
+  const sql = `
+  SELECT *
+  FROM Employees
+  `;
+  const { rows: Employees } = await db.query(sql);
+  return Employees;
 }
 
 /**
